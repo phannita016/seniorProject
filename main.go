@@ -2,31 +2,22 @@ package main
 
 import (
 	"context"
-	"fmt"
-	"log"
-	"time"
 
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"github.com/gofiber/fiber/v2"
+	"github.com/phannita016/seniorProject/config"
 )
 
 func main() {
-	connectionURI := "mongodb://phannita016:123456@0.0.0.0:2000"
+	app := fiber.New()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+	db := config.ConnectDB()
+	defer func() {
+		if err := db.Disconnect(context.TODO()); err != nil {
+			panic(err)
+		}
+	}()
 
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(connectionURI))
-	if err != nil {
-		log.Fatal(err)
+	if err := app.Listen(":6000"); err != nil {
+		panic(err)
 	}
-	defer client.Disconnect(ctx)
-
-	err = client.Ping(ctx, readpref.Primary())
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Connected")
 }
