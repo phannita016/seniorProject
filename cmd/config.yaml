@@ -1,0 +1,19 @@
+service: "fb"
+
+# mongo:
+#   uri:
+#   host: "127.0.0.1:28017"
+#   username: "phannita016"
+#   password: "123456"
+#   database: "license"
+
+mongo:
+  uri:
+  host: "127.0.0.1:26017"
+  username: "root"
+  password: "password"
+  database: "seniorproject"
+
+admin:
+  username: "admin"
+  password: "P@ssw0rd"
