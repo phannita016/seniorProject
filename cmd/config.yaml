@@ -6,10 +6,13 @@ service: "fb"
 #   username: "phannita016"
 #   password: "123456"
 #   database: "license"
-
+server:
+  address: 0.0.0.0
+  port: 8081
+  
 mongo:
   uri:
-  host: "127.0.0.1:26017"
+  host: "127.0.0.1:27017"
   username: "root"
   password: "password"
   database: "seniorproject"
