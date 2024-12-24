@@ -48,15 +48,14 @@ func ConnectDB(opt Option) (*MONGOClient, error) {
 		})
 	}
 
-	client, err := mongo.NewClient(opts)
+	var ctx = context.Background()
+	client, err := mongo.Connect(ctx, opts)
 	if err != nil {
 		return nil, err
 	}
 
-	var ctx = context.Background()
-	if err = client.Connect(ctx); err != nil {
-		return nil, err
-	}
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
 
 	if err = client.Ping(ctx, readpref.Primary()); err != nil {
 		return nil, err
